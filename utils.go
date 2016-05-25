@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/pelletier/go-toml"
 	"io/ioutil"
+	"log"
 	"os"
 	"path"
 	"runtime"
@@ -41,7 +42,8 @@ func ReadCurrencyRates() (map[string]float64, error) {
 	if delta.Hours() > 24 {
 		err := UpdateData()
 		if err != nil {
-			return rates, err
+			//return rates, err
+			log.Println("Data older than 24 hours")
 		}
 	}
 
