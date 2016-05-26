@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"time"
 )
 
 func IsInit() bool {
@@ -16,6 +17,27 @@ func IsInit() bool {
 		return true
 	} else {
 		return false
+	}
+}
+
+func IsDataOld() (bool, error) {
+	ratesPath, err := GetCurrencyRatesPath()
+	if err != nil {
+		return false, err
+	}
+
+	info, err := os.Stat(ratesPath)
+	if err != nil {
+		return false, err
+	}
+
+
+	modTime := info.ModTime()
+	delta := time.Now().Sub(modTime)
+	if delta.Hours() > 24 {
+		return true, nil
+	} else {
+		return false, nil
 	}
 }
 
