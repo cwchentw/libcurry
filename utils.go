@@ -19,7 +19,7 @@ func IsInit() bool {
 	}
 }
 
-func getCurrencyRatesPath() (string, error) {
+func GetCurrencyRatesPath() (string, error) {
 	dataDir, err := getDataDir()
 	if err != nil {
 		return "", err
@@ -29,7 +29,7 @@ func getCurrencyRatesPath() (string, error) {
 	return currencyRatesPath, nil
 }
 
-func getCurrenciesPath() (string, error) {
+func GetCurrenciesPath() (string, error) {
 	dataDir, err := getDataDir()
 	if err != nil {
 		return "", err
