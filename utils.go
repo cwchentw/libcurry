@@ -12,15 +12,82 @@ import (
 	"time"
 )
 
-func IsInit() bool {
-	rcPath := getRcPath()
-	_, err := os.Stat(rcPath)
-
+func SetFromCurrency(currency string) error {
+	err := setFromToCurrency("from", currency)
 	if err != nil {
-		return true
-	} else {
-		return false
+		return err
 	}
+
+	return nil
+}
+
+func SetToCurrency(currency string) error {
+	err := setFromToCurrency("to", currency)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func setFromToCurrency(fromTo string, currency string) error {
+	configTree, err := loadConfigFile()
+	if err != nil {
+		return err
+	}
+
+	currencies, err := ReadCurrencies()
+	if err != nil {
+		return nil
+	}
+
+	_, ok := currencies[currency]
+	if ok != true {
+		return UnknownCurrency()
+	}
+
+	var _currency interface{}
+	_currency = currency
+	configTree.Set(fromTo, _currency)
+
+	err = writeConfigFile(configTree)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func ReadFromCurrency() (string, error) {
+	from, err := getFromToCurrency("from")
+	if err != nil {
+		return "", err
+	}
+	return from, nil
+}
+
+func ReadToCurrency() (string, error) {
+	to, err := getFromToCurrency("to")
+	if err != nil {
+		return "", err
+	}
+	return to, nil
+}
+
+func getFromToCurrency(fromTo string) (string, error) {
+	configTree, err := loadConfigFile()
+	if err != nil {
+		return "", err
+	}
+
+	item := configTree.Get(fromTo)
+
+	result, ok := item.(string)
+	if ok != true {
+		return "", errors.New("Unable to read " + fromTo + " currency")
+	}
+
+	return result, nil
 }
 
 func ReadCurrencyRates() (map[string]float64, error) {
@@ -104,6 +171,17 @@ func ReadCurrencies() (map[string]string, error) {
 	}
 
 	return currencies, nil
+}
+
+func IsInit() bool {
+	rcPath := getRcPath()
+	_, err := os.Stat(rcPath)
+
+	if err != nil {
+		return true
+	} else {
+		return false
+	}
 }
 
 func loadConfigFile() (*toml.TomlTree, error) {
