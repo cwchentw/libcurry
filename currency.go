@@ -87,7 +87,7 @@ func setFromToCurrency(fromTo string, currency string) error {
 func ReadCurrencies() (map[string]string, error) {
 	currencies := make(map[string]string)
 
-	currenciesPath, err := getCurrenciesPath()
+	currenciesPath, err := GetCurrenciesPath()
 	if err != nil {
 		return currencies, err
 	}

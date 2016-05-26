@@ -46,7 +46,7 @@ func getFromToCurrencyRate(fromTo string) (float64, error) {
 func ReadCurrencyRates() (map[string]float64, error) {
 	rates := make(map[string]float64)
 
-	ratesPath, err := getCurrencyRatesPath()
+	ratesPath, err := GetCurrencyRatesPath()
 	if err != nil {
 		return rates, err
 	}
