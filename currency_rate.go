@@ -3,10 +3,7 @@ package libcurry
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"math"
-	"os"
-	"time"
 )
 
 func ReadFromCurrencyRate() (float64, error) {
@@ -52,22 +49,6 @@ func ReadCurrencyRates() (map[string]float64, error) {
 	ratesPath, err := getCurrencyRatesPath()
 	if err != nil {
 		return rates, err
-	}
-
-	info, err := os.Stat(ratesPath)
-	if err != nil {
-		return rates, err
-	}
-
-	// Update data if modification time > 24 hours
-	modTime := info.ModTime()
-	delta := time.Now().Sub(modTime)
-	if delta.Hours() > 24 {
-		err := UpdateData()
-		if err != nil {
-			//return rates, err
-			log.Println("Data older than 24 hours")
-		}
 	}
 
 	content, err := ioutil.ReadFile(ratesPath)
