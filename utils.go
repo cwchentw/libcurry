@@ -68,13 +68,17 @@ func loadConfig() (map[string]interface{}, error) {
 	return tree.ToMap(), nil
 }
 
+func GetConfigPath() string {
+	return getRcPath()
+}
+
 func getRcPath() string {
 	return path.Join(getHomeDir(), ".currencyrc")
 }
 
 func getHomeDir() string {
 	if runtime.GOOS == "windows" {
-		return os.Getenv("HOMEPATH")
+		return os.Getenv("APPDATA")
 	} else {
 		return os.Getenv("HOME")
 	}
