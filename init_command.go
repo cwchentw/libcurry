@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"path"
 	"os"
+	"path"
 )
 
 func InitSetting() error {

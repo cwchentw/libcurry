@@ -53,7 +53,7 @@ func fromTo(cur1 string, cur2 string, amountStr string) error {
 		return err
 	}
 
-	fmt.Printf("%.2f\n", amount * curTo / curFrom)
+	fmt.Printf("%.2f\n", amount*curTo/curFrom)
 
 	return nil
 }
