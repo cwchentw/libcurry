@@ -41,7 +41,7 @@ func SetToCurrency(currency string) error {
 }
 
 func getFromToCurrency(fromTo string) (string, error) {
-	configTree, err := loadConfigFile()
+	configTree, err := LoadConfigFile()
 	if err != nil {
 		return "", err
 	}
@@ -57,7 +57,7 @@ func getFromToCurrency(fromTo string) (string, error) {
 }
 
 func setFromToCurrency(fromTo string, currency string) error {
-	configTree, err := loadConfigFile()
+	configTree, err := LoadConfigFile()
 	if err != nil {
 		return err
 	}
@@ -76,7 +76,7 @@ func setFromToCurrency(fromTo string, currency string) error {
 	_currency = currency
 	configTree.Set(fromTo, _currency)
 
-	err = writeConfigFile(configTree)
+	err = WriteConfigFile(configTree)
 	if err != nil {
 		return err
 	}

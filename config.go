@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func loadConfigFile() (*toml.TomlTree, error) {
+func LoadConfigFile() (*toml.TomlTree, error) {
 	var tree *toml.TomlTree
 	rcPath := getRcPath()
 	isInit := IsInit()
@@ -23,7 +23,7 @@ func loadConfigFile() (*toml.TomlTree, error) {
 	return tree, nil
 }
 
-func writeConfigFile(tree *toml.TomlTree) error {
+func WriteConfigFile(tree *toml.TomlTree) error {
 	rcPath := getRcPath()
 	f, err := os.Create(rcPath)
 	if err != nil {
